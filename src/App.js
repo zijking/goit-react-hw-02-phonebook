@@ -22,6 +22,17 @@ class App extends Component {
 
   handelAddContact = (event, name, number) => {
     event.preventDefault();
+    const { filter, contacts } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+
+    if (
+      contacts.filter(contact =>
+        contact.name.toLowerCase().includes(normalizedFilter),
+      ).length > 0
+    ) {
+      window.alert('alredy exist');
+      return;
+    }
 
     const objCon = {
       name,
