@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import s from './form.module.css';
 
 class FormAddContact extends Component {
   state = {
@@ -18,9 +19,9 @@ class FormAddContact extends Component {
   };
   render() {
     return (
-      <form onSubmit={this.formSubmit}>
-        <label>
-          Name:
+      <form className={s.form} onSubmit={this.formSubmit}>
+        <label className={s.input}>
+          Name:<br></br>
           <input
             type="text"
             onChange={this.onChange}
@@ -28,8 +29,8 @@ class FormAddContact extends Component {
             name="name"
           />
         </label>
-        <label>
-          Number:
+        <label className={s.input}>
+          Number:<br></br>
           <input
             type="text"
             name="number"
@@ -37,7 +38,7 @@ class FormAddContact extends Component {
             value={this.state.number}
           />
         </label>
-        <input type="submit" value="ADD" />
+        <input className="btn" type="submit" value="Add contact" />
       </form>
     );
   }
