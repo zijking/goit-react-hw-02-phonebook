@@ -1,13 +1,14 @@
 import React from 'react';
 
-function Contacts({ contacts }) {
+function Contacts({ contacts, onDelete }) {
   return (
     <ul>
       {contacts.map(c => {
         return (
           <li key={c.id}>
             <p>
-              {c.name}-{c.number}
+              <starong>{c.name}:</starong> <b>{c.number}</b>{' '}
+              <button onClick={() => onDelete(c.id)}>Delete</button>
             </p>
           </li>
         );

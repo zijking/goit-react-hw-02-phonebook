@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
-import ContactsRender from './components/ContactList';
+import ContactList from './components/ContactList';
 import Filter from './components/Filter';
-import FormAdd from './components/FormAdd';
+import ContactForm from './components/FormAdd';
 
 class App extends Component {
   state = {
@@ -22,15 +22,13 @@ class App extends Component {
 
   handelAddContact = (event, name, number) => {
     event.preventDefault();
-    const { filter, contacts } = this.state;
-    const normalizedFilter = filter.toLowerCase();
+    const { contacts } = this.state;
+    const normalizedName = name.toLowerCase();
 
     if (
-      contacts.filter(contact =>
-        contact.name.toLowerCase().includes(normalizedFilter),
-      ).length > 0
+      contacts.find(contact => contact.name.toLowerCase() === normalizedName)
     ) {
-      window.alert('alredy exist');
+      window.alert(`${name} is alredy in contacts`);
       return;
     }
 
@@ -56,17 +54,24 @@ class App extends Component {
     );
   };
 
+  deleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(c => c.id !== contactId),
+    }));
+  };
+
   render() {
     return (
       <div className="App">
         <h1>Phonebook</h1>
-        <FormAdd onSubmit={this.handelAddContact} />
+        <ContactForm onSubmit={this.handelAddContact} />
 
-        <Filter onChange={this.onChange} />
         <h2>Contacts</h2>
-        <ContactsRender
+        <Filter onChange={this.onChange} />
+        <ContactList
           contacts={this.getVisibleContacts()}
           value={this.state.filter}
+          onDelete={this.deleteContact}
         />
       </div>
     );
